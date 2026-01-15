@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Türkçe karakter desteği -->
+    <meta charset="UTF-8">
+
+    <!-- Sayfa başlığı -->
+    <title>Şifre Yenileme</title>
+
+    <!-- Ortak stil dosyası -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- Sayfa içeriğini saran ana kutu -->
+<div class="kutu">
+
+    <!-- Sayfa başlığı -->
+    <h2>Şifre Yenileme</h2>
+
+    <!-- Şifre güncelleme formu -->
+    <form action="/sifre-guncelle" method="post">
+
+        <!-- Kullanıcı adı alanı -->
+        <label>Kullanıcı Adı</label>
+        <input type="text" name="kullanici" required placeholder="akademisyen">
+
+        <!-- Yeni şifre alanı -->
+        <label>Yeni Şifre</label>
+        <input type="password" name="yeniSifre" required placeholder="******">
+
+        <!-- Yeni şifre tekrar alanı -->
+        <label>Yeni Şifre (Tekrar)</label>
+        <input type="password" name="yeniSifreTekrar" required placeholder="******">
+
+        <!-- Formu gönderme butonu -->
+        <button type="submit">Şifreyi Güncelle</button>
+    </form>
+
+    <!-- Hata mesajı gösterimi -->
+    <div th:if="${hata}" style="color: red; margin-top: 10px; text-align: center;">
+        <p th:text="${hata}"></p>
+    </div>
+
+    <!-- Başarı mesajı gösterimi -->
+    <div th:if="${mesaj}" style="color: green; margin-top: 10px; text-align: center;">
+        <p th:text="${mesaj}"></p>
+    </div>
+
+    <!-- Geri dönüş linki -->
+    <a href="/Geri Dön"
+       style="text-decoration: none; color: #007bff; font-size: 0.9em;">
+        Geri Dön
+    </a>
+
+</div>
+</body>
+</html>

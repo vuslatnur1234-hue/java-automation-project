@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Sayfanın karakter seti -->
+    <meta charset="UTF-8">
+    <!-- Tarayıcı sekmesinde görünen başlık -->
+    <title>Not Ekle</title>
+    <!-- Ortak stil dosyasının projeye dahil edilmesi -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- Not ekleme işlemlerinin yapıldığı ana kutu -->
+<div class="kutu">
+    <!-- Sayfa başlığı -->
+    <h2>Not Ekleme Paneli</h2>
+
+    <!-- Başarılı işlem mesajı (varsa ekranda gösterilir) -->
+    <div th:if="${mesaj}" class="mesaj-basari" th:text="${mesaj}"></div>
+
+    <!-- Hata mesajı (varsa ekranda gösterilir) -->
+    <div th:if="${hata}" class="mesaj-hata" th:text="${hata}"></div>
+
+    <!-- Not ekleme formu -->
+    <form action="/not-kaydet" method="post">
+
+        <!-- Öğrenci seçimi alanı -->
+        <label>Öğrenci Seçiniz</label>
+        <select name="secilenOgrenci" id="ogrenciListesi" required style="width: 100%;">
+            <option value="" disabled selected>Listeden Seçin</option>
+            <!-- Veritabanından gelen öğrenci listesinin döngü ile doldurulması -->
+            <option th:each="ogr : ${ogrenciler}" th:text="${ogr}" th:value="${ogr}"></option>
+        </select>
+
+        <!-- Ders seçimi alanı -->
+        <label>Ders Seçiniz</label>
+        <select name="dersBilgisi" id="dersSecim" onchange="hocaGoster()" required style="width: 100%;">
+            <option value="" disabled selected>Ders Seçin</option>
+            <!-- Ders adı | AKTS | Ders hocası bilgileri birlikte gönderilir -->
+            <option value="Veri Tabanı|5|Dr. Ahmet Yılmaz">Veri Tabanı Yönetim Sistemleri (5 AKTS)</option>
+            <option value="Nesne Tabanlı|6|Doç. Dr. Hasan Balcı">Nesne Tabanlı Programlama (6 AKTS)</option>
+            <option value="Web Programlama|4|Öğr. Gör. Caner Kurt">Web Tasarımı ve Programlama (4 AKTS)</option>
+            <option value="Mobil Uygulama|6|Dr. Umut Yıldız">Mobil Uygulama Geliştirme (6 AKTS)</option>
+            <option value="Veri Yapıları|5|Dr. Elif Soylu">Veri Yapıları ve Algoritmalar (5 AKTS)</option>
+            <option value="İşletim Sistemleri|4|Doç. Dr. Yusuf Kılınç">İşletim Sistemleri (4 AKTS)</option>
+            <option value="Görsel Programlama|5|Dr. Selin Ak">Görsel Programlama (5 AKTS)</option>
+            <option value="Bilgisayar Ağları|5|Dr. Hilal Sucu">Bilgisayar Ağları (5 AKTS)</option>
+            <option value="Ağ Temelleri|4|Öğr. Gör. Burak Şen">Ağ Temelleri ve Güvenliği (4 AKTS)</option>
+            <option value="Siber Güvenlik|5|Dr. Mert Kara">Siber Güvenlik Temelleri (5 AKTS)</option>
+            <option value="Yapay Zeka|6|Doç. Dr. Arzu Bak">Yapay Zeka Giriş (6 AKTS)</option>
+        </select>
+
+        <!-- Seçilen derse ait hocanın otomatik gösterildiği alan -->
+        <label>Dersin Hocası</label>
+        <input type="text" id="hocaKutusu" name="dersHocasi" readonly style="background-color: #eee; width: 100%;">
+
+        <!-- Not ve devamsızlık bilgilerinin girildiği alan -->
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <div style="flex: 1;">
+                <!-- Vize notu girişi -->
+                <label>Vize</label>
+                <input type="number" name="vizeNotu" placeholder="0-100" required min="0" max="100" style="width: 100%;">
+            </div>
+            <div style="flex: 1;">
+                <!-- Final notu girişi -->
+                <label>Final</label>
+                <input type="number" name="finalNotu" placeholder="0-100" required min="0" max="100" style="width: 100%;">
+            </div>
+            <div style="flex: 1;">
+                <!-- Devamsızlık bilgisi girişi -->
+                <label>Devamsızlık</label>
+                <input type="number" name="devamsizlik" placeholder="Gün" value="0" required min="0" style="width: 100%;">
+            </div>
+        </div>
+
+        <!-- Formu gönderme butonu -->
+        <button type="submit" style="margin-top: 20px;">Notları Kaydet</button>
+    </form>
+
+    <!-- Ana menüye geri dönüş bağlantısı -->
+    <a href="/ana-menu" class="btn btn-gri">İptal / Geri Dön</a>
+</div>
+
+<script>
+    // Seçilen dersin hocasını otomatik olarak metin kutusunda gösteren fonksiyon
+    function hocaGoster() {
+        let secim = document.getElementById("dersSecim").value;
+        if (secim) {
+            let hoca = secim.split("|")[2];
+            document.getElementById("hocaKutusu").value = hoca;
+        }
+    }
+</script>
+
+</body>
+</html>

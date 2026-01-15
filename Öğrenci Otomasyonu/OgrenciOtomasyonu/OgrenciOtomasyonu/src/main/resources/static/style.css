@@ -1,0 +1,178 @@
+/* --- GENEL AYARLAR --- */
+body {
+     background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        color: #2f2f2f;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Sayfa uzarsa arka plan da uzasın */
+    margin: 0;
+    color: #444;
+}
+
+/* --- ANA KUTU (Glassmorphism) --- */
+.kutu {
+    background-color: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+    width: 380px; /* Standart genişlik */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.kutu:hover {
+    transform: translateY(-5px);
+}
+
+/* Liste sayfası için geniş kutu */
+.genis-kutu {
+    width: 900px !important; /* Tablo sığsın diye genişletiyoruz */
+}
+
+/* --- METİNLER --- */
+h2 {
+    color: #6c5ce7; /* Modern mor */
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+    color: #666;
+    font-weight: 600;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+/* --- GİRİŞ KUTULARI (Input & Select) --- */
+input, select {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 2px solid #f1f1f1;
+    background-color: #fafafa;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    color: #333;
+}
+
+input:focus, select:focus {
+    border-color: #6c5ce7;
+    box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.15);
+    background-color: #fff;
+    outline: none;
+
+}
+
+/* --- BUTONLAR --- */
+button, .btn {
+    display: inline-block;
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(to right, #6c5ce7, #00cec9);
+    box-shadow: 0 6px 18px rgba(108, 92, 231, 0.35);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none; /* Linkler altı çizili olmasın */
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+button:hover, .btn:hover {
+    background: linear-gradient(to right, #5f4bd8, #00b5ad);
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(89, 109, 189, 0.4);
+}
+
+/* Kırmızı Buton (Çıkış ve Sil için) */
+.btn-kirmizi {
+    background: linear-gradient(to right, #ff7675, #d63031);
+    box-shadow: 0 5px 15px rgba(214, 48, 49, 0.35);
+}
+.btn-kirmizi:hover {
+    background: linear-gradient(to right, #ee5253, #d63031);
+}
+
+/* Gri Buton (Geri Dön için) */
+.btn-gri {
+    background: #f1f2f6;
+    color: #636e72;
+    box-shadow: none;
+    margin-top: 10px;
+}
+.btn-gri:hover {
+    background: #eaeaea;
+    color: #333;
+    transform: none; /* Zıplamasın */
+}
+
+/* --- TABLO TASARIMI --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+th {
+    background-color: #6c5ce7;
+    color: white;
+    padding: 15px;
+    text-align: left;
+}
+
+td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    color: #555;
+}
+
+/* Satır Renklendirme (Daha yumuşak tonlar) */
+.durum-kaldı {
+    background-color: #fff5f5;
+    border-left: 5px solid #ff7675;
+}
+
+.durum-orta {
+    background-color: #fff9e6;
+    border-left: 5px solid #fdcb6e;
+}
+
+.durum-gecti {
+    background-color: #eafff3;
+    border-left: 5px solid #00b894;
+}
+
+
+/* --- UYARI MESAJLARI --- */
+.mesaj-hata {
+     background-color: #ffecec;
+        color: #d63031;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+.mesaj-basari {
+     background-color: #eafff3;
+        color: #006644;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}

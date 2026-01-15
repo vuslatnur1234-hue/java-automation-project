@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Sayfanın karakter seti -->
+    <meta charset="UTF-8">
+
+    <!-- Tarayıcı sekmesinde görünen başlık -->
+    <title>Öğrenci Listesi</title>
+
+    <!-- Ortak stil dosyası -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- Geniş tablo görünümü için kullanılan ana kutu -->
+<div class="kutu genis-kutu">
+
+    <!-- Başlık ve arama alanı -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>Öğrenci Listesi</h2>
+
+        <!-- Öğrenci ismine göre arama formu -->
+        <form action="/ogrenci-listesi" method="get" style="display: flex; gap: 10px; margin: 0;">
+            <input type="text" name="aramaKelimesi" placeholder="İsim ara..."
+                   style="margin: 0; padding: 10px; width: 200px;">
+            <button type="submit" style="width: auto; padding: 10px 20px;">Ara</button>
+        </form>
+    </div>
+
+    <!-- Öğrenci bilgilerinin gösterildiği tablo -->
+    <table>
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Ad Soyad</th>
+            <th>Vize</th>
+            <th>Final</th>
+            <th>Devamsızlık</th>
+            <th>Ortalama</th>
+            <th>Harf Notu</th>
+            <th>Durum</th>
+            <th>İşlem</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <!-- Öğrenci listesi üzerinden döngü -->
+        <tr th:each="ogr : ${liste}"
+            th:class="${ogr.devamsizlik >= 5} ? 'durum-kaldı' :
+                      (${ogr.ortalama < 50} ? 'durum-kaldı' : 'durum-gecti')">
+
+            <!-- Satır bazlı güncelleme formu -->
+            <form th:action="@{/ogrenci-guncelle-kaydet}" method="post" style="margin:0;">
+
+                <!-- Eski öğrenci numarası (gizli alan) -->
+                <input type="hidden" name="eskiNo" th:value="${ogr.no}">
+
+                <!-- Öğrenci Numarası -->
+                <td>
+                    <span th:text="${ogr.no}" class="view-mode"></span>
+                    <input type="text" name="yeniNo" th:value="${ogr.no}"
+                           class="edit-mode"
+                           style="display:none; width:60px; padding:5px;">
+                </td>
+
+                <!-- Öğrenci Adı -->
+                <td>
+                    <span th:text="${ogr.ad}" class="view-mode" style="font-weight: bold;"></span>
+                    <input type="text" name="yeniAd" th:value="${ogr.ad}"
+                           class="edit-mode"
+                           style="display:none; width:150px; padding:5px;">
+                </td>
+
+                <!-- Vize Notu -->
+                <td>
+                    <span th:text="${ogr.vize}" class="view-mode"></span>
+                    <input type="number" name="yeniVize" th:value="${ogr.vize}"
+                           class="edit-mode"
+                           style="display:none; width:50px; padding:5px;"
+                           min="0" max="100">
+                </td>
+
+                <!-- Final Notu -->
+                <td>
+                    <span th:text="${ogr.finall}" class="view-mode"></span>
+                    <input type="number" name="yeniFinal" th:value="${ogr.finall}"
+                           class="edit-mode"
+                           style="display:none; width:50px; padding:5px;"
+                           min="0" max="100">
+                </td>
+
+                <!-- Devamsızlık Bilgisi -->
+                <td>
+                    <span th:text="${ogr.devamsizlik}" class="view-mode" style="color: #d63031;"></span>
+                    <input type="number" name="yeniDevamsizlik" th:value="${ogr.devamsizlik}"
+                           class="edit-mode"
+                           style="display:none; width:50px; padding:5px;"
+                           min="0">
+                </td>
+
+                <!-- Ortalama (1 ondalık basamak) -->
+                <td th:text="${#numbers.formatDecimal(ogr.ortalama, 1, 1)}"></td>
+
+                <!-- Harf notu (renkli gösterim) -->
+                <td style="font-weight: bold;">
+                    <span th:text="${ogr.harfNotu}"
+                          th:style="${ogr.harfNotu.startsWith('A') || ogr.harfNotu.startsWith('B')} ? 'color: #27ae60;' :
+                                   (${ogr.harfNotu.startsWith('C') || ogr.harfNotu.startsWith('D')} ? 'color: #d35400;' :
+                                   'color: #d63031;')">
+                    </span>
+                </td>
+
+                <!-- Geçti / Kaldı / Devamsız durumu -->
+                <td th:text="${ogr.durum}"></td>
+
+                <!-- İşlem Butonları -->
+                <td style="white-space: nowrap; width: 150px; text-align: center;">
+
+                    <!-- Düzenle Butonu -->
+                    <button type="button"
+                            class="btn view-mode"
+                            onclick="duzenleModu(this)"
+                            style="background-color: #27ae60; color:white; padding: 4px 8px;
+                                   font-size: 11px; width: 65px; border:none;
+                                   border-radius:4px; cursor:pointer;">
+                        Düzenle
+                    </button>
+
+                    <!-- Kaydet Butonu -->
+                    <button type="submit"
+                            class="btn edit-mode"
+                            style="display:none; background-color: #0984e3; color:white;
+                                   padding: 4px 8px; font-size: 11px; width: 65px;
+                                   border:none; border-radius:4px; cursor:pointer;">
+                        Kaydet
+                    </button>
+
+                    <!-- Silme Linki -->
+                    <a th:href="@{'/ogrenci-sil/' + ${ogr.no}}"
+                       class="btn btn-kirmizi view-mode"
+                       onclick="return confirm('Bu öğrenciyi silmek istediğine emin misin?')"
+                       style="padding: 4px 8px; font-size: 11px; width: 50px;
+                              text-decoration: none; display: inline-block;
+                              background-color: #d63031; color: white;
+                              border-radius: 4px;">
+                        Sil
+                    </a>
+                </td>
+
+            </form>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Ana menüye dönüş -->
+    <a href="/ana-menu" class="btn btn-gri">Ana Menüye Dön</a>
+</div>
+
+<!-- Satırı düzenleme moduna alan JavaScript fonksiyonu -->
+<script>
+    function duzenleModu(buton) {
+        let satir = buton.closest('tr');
+        satir.querySelectorAll('.view-mode').forEach(el => el.style.display = 'none');
+        satir.querySelectorAll('.edit-mode').forEach(el => el.style.display = 'inline-block');
+    }
+</script>
+
+</body>
+</html>

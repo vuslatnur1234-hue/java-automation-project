@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Sayfanın karakter seti -->
+    <meta charset="UTF-8">
+    <!-- Tarayıcı sekmesinde görünen başlık -->
+    <title>Ana Menü</title>
+    <!-- Genel stillerin yüklendiği CSS dosyası -->
+    <link rel="stylesheet" href="/style.css">
+    <!-- Grafik çizimi için Chart.js kütüphanesi -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- Ana menü kutusu -->
+<div class="kutu" style="width: 500px;">
+    <!-- Sayfa başlığı -->
+    <h2>Öğrenci Otomasyonu</h2>
+
+    <!-- Grafik alanı -->
+    <div style="width: 300px; margin: 0 auto 20px auto;">
+        <!-- Chart.js grafiğinin çizileceği canvas -->
+        <canvas id="basariGrafigi"></canvas>
+    </div>
+
+    <!-- Menü butonları -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <!-- Öğrenci ekleme sayfasına gider -->
+        <a href="/ogrenci-ekle" class="btn">Öğrenci Ekle</a>
+        <!-- Not ekleme sayfasına gider -->
+        <a href="/not-ekle" class="btn">Not Ekle</a>
+    </div>
+
+    <!-- Öğrenci listesi sayfasına gider -->
+    <a href="/ogrenci-listesi" class="btn" style="margin-top: 10px;">Öğrenci Listesi</a>
+    <!-- Çıkış yapıp giriş sayfasına döner -->
+    <a href="/" class="btn btn-kirmizi" style="margin-top: 10px;">Çıkış Yap</a>
+</div>
+
+<!-- Thymeleaf ile JavaScript değişkenlerinin kullanıldığı alan -->
+<script th:inline="javascript">
+    // Controller'dan gelen öğrenci durum sayıları
+    var gecen = /*[[${gecen}]]*/ 0;
+    var kalan = /*[[${kalan}]]*/ 0;
+    var devamsiz = /*[[${devamsiz}]]*/ 0;
+
+    // Canvas üzerinden grafik çizimi için context alınır
+    var ctx = document.getElementById('basariGrafigi').getContext('2d');
+
+    // Başarı durumlarını gösteren pasta grafik
+    var myChart = new Chart(ctx, {
+        type: 'pie', // Grafik tipi: Pasta
+        data: {
+            // Grafik etiketleri
+            labels: ['Geçti', 'Kaldı', 'Devamsız'],
+            datasets: [{
+                // Grafikte gösterilecek veriler
+                data: [gecen, kalan, devamsiz],
+                // Dilim renkleri
+                backgroundColor: [
+                    '#1dd1a1', // Yeşil (Geçti)
+                    '#feca57', // Sarı (Kaldı)
+                    '#ff6b6b'  // Kırmızı (Devamsız)
+                ],
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+
+</body>
+</html>

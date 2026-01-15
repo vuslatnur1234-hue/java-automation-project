@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Sayfanın karakter seti -->
+    <meta charset="UTF-8">
+
+    <!-- Tarayıcı sekmesinde görünen başlık -->
+    <title>Öğrenci Ekle</title>
+
+    <!-- Ortak CSS dosyasının projeye dahil edilmesi -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- Öğrenci ekleme işlemlerinin yapıldığı ana kutu -->
+<div class="kutu">
+    <!-- Sayfa başlığı -->
+    <h2>Yeni Öğrenci</h2>
+
+    <!-- Hata mesajı (varsa ekranda gösterilir) -->
+    <div th:if="${hata}" class="mesaj-hata" th:text="${hata}"></div>
+
+    <!-- Başarılı işlem mesajı (varsa ekranda gösterilir) -->
+    <div th:if="${mesaj}" class="mesaj-basari" th:text="${mesaj}"></div>
+
+    <!-- Öğrenci ekleme formu -->
+    <form action="/ogrenci-kaydet" method="post">
+
+        <!-- Öğrenci numarası girişi -->
+        <label>Öğrenci Numarası</label>
+        <input type="text" name="no" placeholder="Örn: 2023101" required>
+
+        <!-- Öğrencinin adı soyadı girişi -->
+        <label>Adı Soyadı</label>
+        <input type="text" name="ad" placeholder="Örn: Ayşe Yılmaz" required>
+
+        <!-- Formu gönderme butonu -->
+        <button type="submit">Öğrenciyi Kaydet</button>
+    </form>
+
+    <!-- Ana menüye geri dönüş bağlantısı -->
+    <a href="/ana-menu" class="btn btn-gri">Ana Menüye Dön</a>
+</div>
+
+</body>
+</html>

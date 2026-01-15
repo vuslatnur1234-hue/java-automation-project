@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <!-- Sayfanın karakter seti -->
+    <meta charset="UTF-8">
+    <!-- Tarayıcı sekmesinde görünen başlık -->
+    <title>Öğrenci Otomasyonu - Giriş</title>
+    <!-- Genel stillerin yüklendiği CSS dosyası -->
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<!-- Giriş formunu içeren ana kutu -->
+<div class="kutu">
+    <!-- Sayfa başlığı -->
+    <h2>Sistem Girişi</h2>
+
+    <!-- Kullanıcı giriş formu -->
+    <form action="/giris-yap" method="post">
+        <!-- Kullanıcı adı alanı -->
+        <label>Kullanıcı Adı</label>
+        <input type="text" name="kullanici" placeholder="Adınızı giriniz...">
+
+        <!-- Şifre alanı -->
+        <label>Şifre</label>
+        <input type="password" name="sifre" placeholder="******">
+
+        <!-- Giriş yapma butonu -->
+        <button type="submit">Giriş Yap</button>
+
+        <!-- Şifre yenileme sayfasına yönlendirme -->
+        <div style="margin-top: 15px; text-align: center;">
+            <a href="/sifre-yenile" style="text-decoration: none; color: #007bff; font-size: 0.9em;">
+                Şifremi Unuttum
+            </a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
