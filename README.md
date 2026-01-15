@@ -38,8 +38,6 @@ The main objectives of this project are:
 - SQLite
 - HTML
 - CSS
-- JavaScript
-- Chart.js
 
 ---
 
